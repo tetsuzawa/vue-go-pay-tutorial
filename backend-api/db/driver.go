@@ -31,5 +31,6 @@ func init() {
 	if err != nil {
 		panic(err.Error)
 	}
+	log.Printf("mysql connected: %v\n", dbconf)
 	Conn = conn
 }

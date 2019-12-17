@@ -1,9 +1,9 @@
 BIN_NAME=backend-api
 
-mkdir -p bin
 
 .PHONY: build
 build:
+	mkdir -p ./bin/
 	go build -o bin/$(BIN_NAME) .
 
 

@@ -2,19 +2,21 @@ package db
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/tetsuzawa/vue-go-pay-tutorial/backend-api/domain"
 )
 
 // SelectAllItems - select all posts
 func SelectAllItems() (items domain.Items, err error) {
+	log.Println("select all items called with request:", items)
 	stmt, err := Conn.Query("SELECT * FROM items")
 	if err != nil {
 		return
 	}
 	defer stmt.Close()
 	for stmt.Next() {
-		var id string
+		var id int64
 		var name string
 		var description string
 		var amount int64
@@ -33,19 +35,21 @@ func SelectAllItems() (items domain.Items, err error) {
 }
 
 // SelectItem - select post
-func SelectItem(identifier string) (item domain.Item, err error) {
+func SelectItem(identifier int64) (item domain.Item, err error) {
+	log.Println("select item called with request:", identifier)
 	stmt, err := Conn.Prepare(fmt.Sprintf("SELECT * FROM items WHERE id = ? LIMIT 1"))
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return
 	}
 	defer stmt.Close()
-	var id string
+	var id int64
 	var name string
 	var description string
 	var amount int64
 	err = stmt.QueryRow(identifier).Scan(&id, &name, &description, &amount)
 	if err != nil {
+		log.Println(err)
 		return
 	}
 	item.ID = id
