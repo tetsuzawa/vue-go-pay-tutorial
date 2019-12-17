@@ -33,7 +33,7 @@ func Charge(c Context) {
 	res, err := db.SelectItem(int64(identifer))
 	if err != nil {
 		err = c.JSON(http.StatusInternalServerError, err)
-		log.Fatalln(err)
+		log.Println(err)
 	}
 	// gRPC サーバーに送る Request を作成
 	payReq := &paypb.PayReq{
@@ -48,7 +48,7 @@ func Charge(c Context) {
 	conn, err := grpc.Dial(addr, grpc.WithInsecure())
 	if err != nil {
 		err = c.JSON(http.StatusForbidden, err)
-		log.Fatalln(err)
+		log.Println(err)
 	}
 	defer conn.Close()
 	client := paypb.NewPayManagerClient(conn)
@@ -57,9 +57,9 @@ func Charge(c Context) {
 	gres, err := client.Charge(context.Background(), payReq)
 	if err != nil {
 		err = c.JSON(http.StatusForbidden, err)
-		log.Fatalln(err)
+		log.Println(err)
 		return
 	}
 	err = c.JSON(http.StatusOK, gres)
-	log.Fatalln(err)
+	log.Println(err)
 }

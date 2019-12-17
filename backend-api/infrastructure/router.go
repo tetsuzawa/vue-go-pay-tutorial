@@ -46,7 +46,7 @@ func NewRouter() *echo.Echo {
 
 	e.Use(middleware.Logger())
 
-	//e.Use(middleware.CORS())
+	e.Use(middleware.CORS())
 
 	// e.DefaultHTTPErrorHandler(controllers.APIError)//TODO
 	e.GET("/", func(c echo.Context) error {
