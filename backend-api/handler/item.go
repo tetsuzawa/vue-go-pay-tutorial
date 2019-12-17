@@ -1,33 +1,40 @@
 package handler
 
 import (
-	"net/http"
-	"strconv"
-
 	"github.com/tetsuzawa/vue-go-pay-tutorial/backend-api/db"
+	"log"
+	"net/http"
 )
 
 // GetLists - get all items
 func GetLists(c Context) {
 	res, err := db.SelectAllItems()
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, nil)
+		err = c.JSON(http.StatusInternalServerError, nil)
+		if err != nil {
+			log.Fatalln(err)
+		}
 		return
 	}
-	c.JSON(http.StatusOK, res)
+	err = c.JSON(http.StatusOK, res)
+	if err != nil {
+		log.Fatalln(err)
+	}
 }
 
 // GetItem - get item by id
 func GetItem(c Context) {
-	identifer, err := strconv.Atoi(c.Param("id"))
+	identifier := c.Param("id")
+	res, err := db.SelectItem(identifier)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, nil)
+		err = c.JSON(http.StatusInternalServerError, nil)
+		if err != nil {
+			log.Fatalln(err)
+		}
 		return
 	}
-	res, err := db.SelectItem(int64(identifer))
+	err = c.JSON(http.StatusOK, res)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, nil)
-		return
+		log.Fatalln(err)
 	}
-	c.JSON(http.StatusOK, res)
 }
