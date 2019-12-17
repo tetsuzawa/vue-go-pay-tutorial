@@ -14,7 +14,7 @@ func SelectAllItems() (items domain.Items, err error) {
 	}
 	defer stmt.Close()
 	for stmt.Next() {
-		var id int64
+		var id string
 		var name string
 		var description string
 		var amount int64
@@ -33,14 +33,14 @@ func SelectAllItems() (items domain.Items, err error) {
 }
 
 // SelectItem - select post
-func SelectItem(identifier int64) (item domain.Item, err error) {
+func SelectItem(identifier string) (item domain.Item, err error) {
 	stmt, err := Conn.Prepare(fmt.Sprintf("SELECT * FROM items WHERE id = ? LIMIT 1"))
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 	defer stmt.Close()
-	var id int64
+	var id string
 	var name string
 	var description string
 	var amount int64
