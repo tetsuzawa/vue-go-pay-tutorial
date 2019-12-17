@@ -2,7 +2,9 @@ package infrastructure
 
 import (
 	"fmt"
+	"github.com/labstack/echo/middleware"
 	"log"
+	"os"
 
 	"github.com/labstack/echo"
 
@@ -15,6 +17,8 @@ func init() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
 	e := echo.New()
+
+	e.Use(middleware.CORS())
 
 	// e.DefaultHTTPErrorHandler(controllers.APIError)//TODO
 
@@ -30,6 +34,6 @@ func init() {
 		handler.Charge(c)
 		return nil
 	})
-	e.Logger.Fatal(e.Start(fmt.Sprintf(":%d", config.Cfg.Web.Port)))
+	e.Logger.Fatal(e.Start(fmt.Sprintf(":%s", os.Getenv("API_SERVER_PORT"))))
 
 }

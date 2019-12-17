@@ -6,7 +6,6 @@ import (
 
 	"github.com/tetsuzawa/vue-go-pay-tutorial/backend-api/db"
 	"github.com/tetsuzawa/vue-go-pay-tutorial/backend-api/domain"
-
 	paypb "github.com/tetsuzawa/vue-go-pay-tutorial/payment-service/protocols/pay"
 )
 
@@ -30,7 +29,7 @@ func Charge(c Context) {
 		panic(err)
 	}
 	// gRPC サーバーに送る Request を作成
-	pay := &paypb.PayRequest{
+	pay := &paypb.PayReq{
 		Id:          identifer,
 		Token:       t.Token,
 		Amount:      res.Amount,
