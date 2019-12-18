@@ -3,6 +3,7 @@
     <ul>
       <li v-for="item in items" :key="item.id" @click="pageto(item.id)">
         <item-card :item="item"></item-card>
+        {{item.id}}
       </li>
     </ul>
   </div>

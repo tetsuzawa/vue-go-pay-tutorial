@@ -1,8 +1,8 @@
 <template>
   <div class="hello">
-    <h1>{{ item.Name }}</h1>
-    <h2>{{ item.Description }}</h2>
-    <h2>{{ item.Amount }}円</h2>
+    <h1>{{ item.name }}</h1>
+    <h2>{{ item.description }}</h2>
+    <h2>{{ item.amount }}円</h2>
 
     <!--api-key="<< PAY.JPの管理画面にある公開テストKey >>"-->
     <!--    api-key={{ check_pub_key }}-->
@@ -17,6 +17,7 @@
     </payjp-checkout>
 
     <p>{{ message }}</p>
+<!--    <p>id: {{ id }}</p>-->
     <router-link to="/">HOMEへ</router-link>
   </div>
 </template>
@@ -30,7 +31,7 @@
       return {
         item: {},
         message: '',
-        check_pub_key: process.env.CHECK_PUB_KEY
+        check_pub_key: process.env.CHECK_PUB_KEY,
       }
     },
     created() {
